@@ -3,18 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagementController;
-
+use App\Http\Controllers\DailyReportController;
+use App\Http\Controllers\TaskCategoryController;
+use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 
 
 Route::get('/', function () {
     return view('auth.login');
 });
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/rcamerge', function () {return view('toolsguest.pdfmerge');})->name('rca.merge');
+Route::get('/rcaselected', function () {return view('toolsguest.pdfselected');})->name('rca.selected');
+Route::get('/rcasplitbill', function () {return view('toolsguest.splitbill');})->name('rcasplitbill');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -30,8 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/masukan', [FeedbackController::class, 'store'])->name('feedback.store');
 });
 
+
 Route::middleware(['auth', 'role:PIC'])->group(function () {    
     Route::resource('users', UserManagementController::class);
+});
+
+Route::middleware(['auth', 'role:dev'])->group(function () {
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
+    Route::patch('/feedback/{feedback}/toggle-done', [FeedbackController::class, 'toggleDone'])->name('feedback.toggle-done');
 });
 
 Route::middleware(['auth','role:PIC'])->group(function () {
@@ -44,15 +51,18 @@ Route::middleware(['auth','role:PIC'])->group(function () {
     Route::delete('/task-categories/{id}', [TaskCategoryController::class, 'destroy'])->name('task-categories.destroy');
 });
 
+
 Route::middleware(['auth'])->prefix('daily-reports')->name('daily-reports.')->group(function () {
     Route::get('/', [DailyReportController::class, 'index'])->name('index');
     Route::get('/create', [DailyReportController::class, 'create'])->name('create');
     Route::post('/', [DailyReportController::class, 'store'])->name('store');
     Route::get('/{dailyReport}', [DailyReportController::class, 'show'])->name('show');
     Route::get('/{dailyReport}/continue', [DailyReportController::class, 'continue'])->name('continue');
+    //Route::put('/{dailyReport}', [DailyReportController::class, 'update'])->name('update');
     Route::delete('/{dailyReport}', [DailyReportController::class, 'destroy'])->name('destroy');
     Route::post('/{dailyReport}/approve', [DailyReportController::class, 'approve'])->name('approve');
 });
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/meetings', [MeetingController::class, 'index'])->name('meetings.index');
     Route::post('/meetings/generate', [MeetingController::class, 'generateMeetings'])->name('meetings.generate');
@@ -62,6 +72,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-
-
