@@ -20,6 +20,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard/export/', [DailyReportController::class, 'exportToExcel'])->name('daily-reports.export');
+    Route::get('/chart-data/custom/{start}/{end}', [DashboardController::class, 'getCustomChartData']);
+    Route::get('/chart-data/{period}', [DashboardController::class, 'getChartData'])->name('chart.data');
+    Route::get('/pdfmerge', function () {return view('tools.pdfmerge');})->name('pdftools.merge');
+    Route::get('/pdfselected', function () {return view('tools.pdfselected');})->name('pdftools.selected');
+    Route::get('/splitbill', function () {return view('tools.splitbill');})->name('splitbill');
+    Route::post('/masukan', [FeedbackController::class, 'store'])->name('feedback.store');
 });
 
 Route::middleware(['auth', 'role:PIC'])->group(function () {    
