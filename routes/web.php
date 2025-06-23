@@ -13,9 +13,6 @@ use App\Http\Controllers\FeedbackController;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/rcamerge', function () {return view('toolsguest.pdfmerge');})->name('rca.merge');
-Route::get('/rcaselected', function () {return view('toolsguest.pdfselected');})->name('rca.selected');
-Route::get('/rcasplitbill', function () {return view('toolsguest.splitbill');})->name('rcasplitbill');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -33,8 +33,8 @@
                 @endrole
             </ul>
         </div>
-        <a class="text-xl text-red-600 btn btn-ghost" href="{{ route('dashboard') }}">
-            rca
+        <a class="text-xl text-emerlad-500 btn btn-ghost" href="{{ route('dashboard') }}">
+            RCA
         </a>
     </div>
 
