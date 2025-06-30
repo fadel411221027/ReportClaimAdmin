@@ -52,6 +52,7 @@
                     </ul>
                 </details>
             </li>
+            <li><a href="/chats">Chat Room</a></li>
             @role('dev')
             <li>
                 <a href="{{ route('feedback')}}">Masukan User</a>
