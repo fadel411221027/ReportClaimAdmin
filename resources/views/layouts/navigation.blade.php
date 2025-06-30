@@ -34,7 +34,7 @@
             </ul>
         </div>
         <a class="text-xl text-emerlad-500 btn btn-ghost" href="{{ route('dashboard') }}">
-            RCA
+            <img src="{{ asset('RCA.png') }}" alt="RCA Logo" class="w-12 h-12">
         </a>
     </div>
 

@@ -5,6 +5,9 @@
     pkgs.php83
     pkgs.php83Packages.composer
     pkgs.sqlite
+    pkgs.mysql
+    pkgs.mysql-client
+    pkgs.mysql84
   ];
   idx.extensions = [
     "svelte.svelte-vscode"
@@ -17,5 +20,9 @@
         manager = "web";
       };
     };
+  };
+  services.mysql = {
+  enable = true;
+  package = pkgs.mariadb;
   };
 }
